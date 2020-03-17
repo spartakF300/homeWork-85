@@ -1,4 +1,5 @@
 import {axiosApi} from "../../axiosApi";
+import {push} from "connected-react-router";
 
 export const FETCH_TRACKS_REQUEST = 'FETCH_TRACKS_REQUEST';
 export const FETCH_TRACKS_SUCCESS = 'FETCH_TRACKS_SUCCESS';
@@ -10,7 +11,9 @@ export const fetchTracksRequest = ()=>({type:FETCH_TRACKS_REQUEST});
 
 
 export const getTracks = (albumsId) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
+        const user = getState().users.user;
+        if (!user) return dispatch(push('/login'));
         try {
             dispatch(fetchTracksRequest());
             const response = await axiosApi.get('/tracks?album=' + albumsId);
@@ -22,3 +25,4 @@ export const getTracks = (albumsId) => {
 
     }
 };
+

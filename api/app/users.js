@@ -9,10 +9,13 @@ const User = require('../model/User');
 router.post('/', async (req, res) => {
     const user = new User(req.body);
 
+
     try {
 
         user.generateToken();
+
         await user.save();
+
         return res.send(user)
 
     } catch (error) {
@@ -36,7 +39,7 @@ router.post('/sessions', async (req, res) => {
     user.generateToken();
     await user.save();
 
-    return res.send({token: user.token})
+    return res.send(user)
 });
 
 module.exports = router;

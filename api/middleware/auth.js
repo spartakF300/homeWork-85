@@ -1,7 +1,7 @@
 const User = require("../model/User");
 
 
-const authorization = async (req, res, next)=>{
+const auth = async (req, res, next)=>{
     const authorizationHeader = req.get('Authorization');
 
     if (!authorizationHeader) {
@@ -20,4 +20,4 @@ const authorization = async (req, res, next)=>{
     req.user = user;
     next();
 };
-module.exports = authorization;
+module.exports = auth;

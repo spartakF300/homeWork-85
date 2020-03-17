@@ -36,10 +36,6 @@ router.post('/', upload.single('image'), async (req, res) => {
         return res.status(400).send(e);
     }
 });
-router.delete('/:id',  async (req, res) => {
-await Artists.findByIdAndDelete({_id: req.params.id});
-    res.send('ok')
-});
 
 module.exports = router;
 

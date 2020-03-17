@@ -34,7 +34,6 @@ router.post('/', async (req, res) => {
 
     try {
         const tracks = await Track.find();
-        console.log(tracks);
         req.body.number = tracks.length+1;
         const track = new Track(req.body);
         track.save();

@@ -3,11 +3,20 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const User = require('../model/User');
 const TrackHistory = require('../model/TrackHistory');
-const authorization = require('../middleware/Authorization');
+const auth = require('../middleware/auth');
 
-router.get('/',authorization,async (req,res)=>{
+router.get('/',auth,async (req,res)=>{
    try{
-       const trackData = await TrackHistory.find().populate('user').populate('track');
+       const trackData = await TrackHistory.find({user:req.user._id}).sort({datetime:-1}).populate({
+           path: 'track',
+           populate:{
+               path:'album',
+               populate:{
+                 path: 'artist'
+               }
+
+           }
+       });
        res.send(trackData)
    }catch (error) {
        res.status(500).send({error: error})
@@ -15,7 +24,8 @@ router.get('/',authorization,async (req,res)=>{
 
 });
 
-router.post('/',authorization, async (req, res) => {
+router.post('/',auth, async (req, res) => {
+
     const trackData = req.body;
     trackData.user = req.user._id;
     try {

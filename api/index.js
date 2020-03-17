@@ -25,7 +25,7 @@ const run = async () => {
     app.use('/albums', albums);
     app.use('/tracks', tracks);
     app.use('/users', users);
-    app.use('/track_history',trackHistory)
+    app.use('/track_history',trackHistory);
 
     app.listen(config.port, () => {
         console.log(`HTTP Server started on ${config.port} port!`);
